@@ -19,7 +19,7 @@ public class Health : MonoBehaviour
     {
         int previousHealth = _currentHealth;
         _currentHealth -= damage;
-        
+
         OnHealthChanged?.Invoke(previousHealth, _currentHealth);
     }
 }
