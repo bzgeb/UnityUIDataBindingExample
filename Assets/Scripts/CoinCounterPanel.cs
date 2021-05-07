@@ -3,19 +3,19 @@ using UnityEngine.UI;
 
 public class CoinCounterPanel : MonoBehaviour
 {
-    GameMain _gameMain;
+    GameViewModel _model;
 
     [SerializeField] Text _text;
 
-    public void OnCreated(GameMain gameMain)
+    public void OnCreated(GameViewModel model)
     {
-        _gameMain = gameMain;
-        _gameMain.OnCoinValueChanged += OnCoinCountChanged;
+        _model = model;
+        _model.OnCoinsValueChanged += OnCoinCountChanged;
     }
 
-    public void OnDestroyed()
+    void OnDestroy()
     {
-        _gameMain.OnCoinValueChanged -= OnCoinCountChanged;
+        _model.OnCoinsValueChanged -= OnCoinCountChanged;
     }
 
     void OnCoinCountChanged(int previous, int current)

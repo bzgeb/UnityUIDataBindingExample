@@ -4,16 +4,10 @@ public class GameViewController : MonoBehaviour
 {
     [SerializeField] HealthPanel _playerHealthPanel;
     [SerializeField] CoinCounterPanel _coinCounterPanel;
-
-    public void OnCreated(GameMain gameMain)
+    
+    public void OnCreated(Health playerHealth, GameViewModel model)
     {
-        _playerHealthPanel.OnCreated(gameMain.Player.Health);
-        _coinCounterPanel.OnCreated(gameMain);
-    }
-
-    public void OnDestroyed()
-    {
-        _playerHealthPanel.OnDestroyed();
-        _coinCounterPanel.OnDestroyed();
+        _playerHealthPanel.OnCreated(playerHealth);
+        _coinCounterPanel.OnCreated(model);
     }
 }

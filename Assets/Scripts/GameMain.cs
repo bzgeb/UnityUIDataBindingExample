@@ -1,15 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameMain : MonoBehaviour
 {
     [SerializeField] Player _player;
     [SerializeField] GameViewController _gameViewController;
 
-    public Player Player => _player;
-
     GameViewModel _model;
-    public event Action<int, int> OnCoinValueChanged;
 
     public struct GameInput
     {
@@ -25,7 +21,7 @@ public class GameMain : MonoBehaviour
         }
 
         _player.OnCreated(this);
-        _gameViewController.OnCreated(this);
+        _gameViewController.OnCreated(_player.Health, _model);
     }
 
     void Update()
@@ -39,22 +35,9 @@ public class GameMain : MonoBehaviour
         _player.OnUpdate(input);
     }
 
-    void OnDestroy()
-    {
-        DestroyViewController(_gameViewController);
-    }
-
     public void CollectCoin(Coin coin)
     {
-        int previous = _model.Coins;
         _model.Coins += 1;
-        OnCoinValueChanged?.Invoke(previous, _model.Coins);
         Destroy(coin.gameObject);
-    }
-
-    public void DestroyViewController(GameViewController viewController)
-    {
-        viewController.OnDestroyed();
-        Destroy(viewController.gameObject);
     }
 }
