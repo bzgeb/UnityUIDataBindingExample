@@ -5,7 +5,7 @@ public class GameMain : MonoBehaviour
     [SerializeField] Player _player;
     [SerializeField] GameViewController _gameViewController;
 
-    GameViewModel _model;
+    [SerializeField] GameViewModel _model;
 
     public struct GameInput
     {
@@ -13,7 +13,7 @@ public class GameMain : MonoBehaviour
         public float Vertical;
     };
 
-    void Start()
+    void Awake()
     {
         if (_model == null)
         {
@@ -21,7 +21,7 @@ public class GameMain : MonoBehaviour
         }
 
         _player.OnCreated(this);
-        _gameViewController.OnCreated(_player.Health, _model);
+        //_gameViewController.OnCreated(_player.Health, _model);
     }
 
     void Update()
@@ -35,9 +35,14 @@ public class GameMain : MonoBehaviour
         _player.OnUpdate(input);
     }
 
+    public void InitializeGameViewController(GameViewController gameViewController)
+    {
+        gameViewController.OnCreated(_player.Health, _model);
+    }
+
     public void CollectCoin(Coin coin)
     {
-        _model.Coins += 1;
+        _model._coins.Value += 1;
         Destroy(coin.gameObject);
     }
 }

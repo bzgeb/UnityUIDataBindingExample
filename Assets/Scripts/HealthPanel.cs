@@ -11,6 +11,7 @@ public class HealthPanel : MonoBehaviour
     {
         _health = health;
         _health.OnHealthChanged += OnHealthChanged;
+        OnHealthChanged(_health.MaxHealth, _health.CurrentHealth);
     }
 
     void OnDestroy()

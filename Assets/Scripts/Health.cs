@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     int _currentHealth;
 
     public int MaxHealth => _maxHealth;
+    public int CurrentHealth => _currentHealth;
 
     public event Action<int, int> OnHealthChanged;
 
