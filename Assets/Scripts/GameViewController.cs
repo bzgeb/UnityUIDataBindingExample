@@ -7,8 +7,7 @@ public class GameViewController : MonoBehaviour
 
     public void Start()
     {
-        GameMain gameMain = FindObjectOfType<GameMain>();
-        gameMain.InitializeGameViewController(this);
+        GameMain.NotifyGameViewControllerWasCreated(this);
     }
     
     public void OnCreated(Health playerHealth, GameViewModel model)

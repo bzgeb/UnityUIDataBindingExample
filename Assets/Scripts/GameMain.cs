@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameMain : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class GameMain : MonoBehaviour
     [SerializeField] GameViewController _gameViewController;
 
     [SerializeField] GameViewModel _model;
+
+    public static event Action<GameViewController> OnGameViewControllerCreated;
 
     public struct GameInput
     {
@@ -22,6 +25,7 @@ public class GameMain : MonoBehaviour
 
         _player.OnCreated(this);
         //_gameViewController.OnCreated(_player.Health, _model);
+        OnGameViewControllerCreated += InitializeGameViewController;
     }
 
     void Update()
@@ -35,7 +39,17 @@ public class GameMain : MonoBehaviour
         _player.OnUpdate(input);
     }
 
-    public void InitializeGameViewController(GameViewController gameViewController)
+    void OnDestroy()
+    {
+        OnGameViewControllerCreated -= InitializeGameViewController;
+    }
+
+    public static void NotifyGameViewControllerWasCreated(GameViewController gameViewController)
+    {
+        OnGameViewControllerCreated?.Invoke(gameViewController);
+    }
+
+    void InitializeGameViewController(GameViewController gameViewController)
     {
         gameViewController.OnCreated(_player.Health, _model);
     }
